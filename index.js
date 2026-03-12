@@ -1,21 +1,21 @@
 const accessKey = "RZEIOVfPhS7vMLkFdd2TSKGFBS4o9_FmcV1Nje3FSjw";
 
-const formEl = document.querySelector("form");
-const searchInputl = document.getElementById("search-input");
-const searchResultsEl = document.querySelector(".search-results");
-const showMoreButtonEl = document.getElementById("show-more-button");
+const form = document.querySelector("form");
+const searchInput = document.getElementById("search-input");
+const searchResults = document.querySelector(".search-results");
+const showMoreButton = document.getElementById("show-more-button");
 
 let inputData = "";
 let page = 1;
 
 async function searchImages() {
-  inputData = searchInputl.value;
+  inputData = searchInput.value;
   const url = `https://api.unsplash.com/search/photos?page=${page}&query=${inputData}&client_id=${accessKey}`;
 
   const response = await fetch(url);
   const data = await response.json();
   if (page === 1) {
-    searchResultsl.innerHTML = "";
+    searchResults.innerHTML = "";
   }
 
   const results = data.results;
@@ -33,22 +33,22 @@ async function searchImages() {
 
     imageWrapper.appendChild(image);
     imageWrapper.appendChild(imageLink);
-    searchResultsEl.appendChild(imageWrapper);
+    searchResults.appendChild(imageWrapper);
   });
 
   page++;
 
   if (page > 1) {
-    showMoreButtonl.style.display = "inline-flex";
+    showMoreButton.style.display = "inline-flex";
   }
 }
 
-formEl.addEventListener("submit", (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   page = 1;
   searchImages();
 });
 
-showMoreButtonEl.addEventListener("click", () => {
+showMoreButton.addEventListener("click", () => {
   searchImages();
 });
